@@ -29,7 +29,7 @@ unset($fields['save_as']);
 
 						<div style="margin-bottom: 2em; display: block; overflow: hidden">
 
-							<div style="float: left; width: 50%">
+							<div class="checkout-fields-billing" style="float: left; width: 48%">
 
 								<h3><?php _e( 'Billing Information', 'woocommerce' ); ?></h3>
 
@@ -46,7 +46,7 @@ unset($fields['save_as']);
 
 							</div>
 
-							<div style="float: right; width: 50%">
+							<div class="checkout-fields-shipping" style="float: right; width: 48%">
 
 								<div style="overflow: hidden; display: block;">
 									<h3 style="float: left;"><?php _e( 'Shipping Information', 'woocommerce' ); ?></h3>

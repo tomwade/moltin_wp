@@ -119,7 +119,7 @@ function moltin_breadcrumb_value_parse(&$item, $key) {
 }
 
 function moltin_get_messages($type = false) {
-	global $moltin;
+	$moltin = moltin();
 
 	return $moltin->get_messages($type);
 }
@@ -140,7 +140,7 @@ function moltin_render_messages($type = false) {
 }
 
 function moltin_set_message($msg, $type = 'info') {
-	global $moltin;
+	$moltin = moltin();
 
 	return $moltin->set_message($msg, $type);
 }

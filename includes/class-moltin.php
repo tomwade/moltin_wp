@@ -73,8 +73,8 @@ class Moltin extends \Moltin\SDK\SDK {
 
         $bypass_cache = false;
 
-        if(is_array($args[1]) && in_array('bypass_cache', $args[1])) {
-            $bypass_cache = true;
+        if(is_array($args[1]) && isset($args[1]['bypass_cache'])) {
+            $bypass_cache = $args[1]['bypass_cache'];
             unset($args[1]['bypass_cache']);
         }
 
@@ -116,7 +116,7 @@ class Moltin extends \Moltin\SDK\SDK {
     		$result = $e->getMessage();
     	}
 
-        if($method == 'get') {
+        if($method == 'get' && $result['status'] === true) {
     	   // Cache the result
     		if(!file_exists(dirname($cache))) {
         		mkdir(dirname($cache), 0777, true);
