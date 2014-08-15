@@ -132,6 +132,12 @@ class Moltin_Init {
 		require_once('helpers/moltin.php');
 
 		/**
+		 * Load our shortcodes
+		 */
+		require_once('includes/shortcodes/class-shortcode-base.php');
+		require_once('includes/shortcodes/class-shortcode-cart_total_items.php');
+
+		/**
 		 * Load the admin area
 		 */
 		if(is_admin()) {
@@ -395,7 +401,11 @@ class Moltin_Init {
 
 				$order = moltin_call('post', 'cart/' . $ident . '/checkout', $order_data);
 
-				$order_id = $order['result']['id'];
+				$order_id = false;
+
+				if(is_array($order)) {
+					$order_id = $order['result']['id'];
+				}
 
 		// Now we have the order, process the payment
 
@@ -416,6 +426,15 @@ class Moltin_Init {
 				$process_data['data']['cvv'] 			= intval($_POST['cvc']);
 
 				$process = moltin_call('post', 'checkout/payment/purchase/' . $order_id, $process_data);
+
+		// Validate that the process was valid
+
+				if(!is_array($process)) {
+					moltin_set_message($process, 'error');
+
+					moltin_get_template_part('cart', 'checkout', array('cart' => $cart, 'shipping' => $shipping, 'user' => $user, 'payment' => $payment));
+					exit;
+				}
 
 		// Check if the process failed..
 
@@ -442,9 +461,13 @@ class Moltin_Init {
 
 			set_moltin_breadcrumb('cart');
 
-			if(isset($_SESSION['order_id'])) {
-				moltin_get_template_part('cart', 'success', array('order_id' => $_SESSION['order_id']));
+			if(isset($_SESSION['order_complete'])) {
+				moltin_get_template_part('cart', 'success', array('order_id' => $_SESSION['order_complete']));
+
+				unset($_SESSION['order_complete']);
 			} else {
+				moltin_set_message('Order ID could not be found.', 'error');
+
 				header('Location: ' . get_permalink(get_option('store_cart_page_id')));
 			}
 
