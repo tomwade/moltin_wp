@@ -81,11 +81,6 @@ class Moltin_Init {
 		// Load JavaScript and stylesheets
 		$this->register_scripts_and_styles();
 
-		// Register our shortcodes
-		foreach (glob(plugin_dir_path(__FILE__) . 'includes/shortcodes/moltin_*.php') as $filename) {
-			include_once $filename;
-		}
-
 		// Include our functions
 		include_once( 'includes/class-install.php' );
 		include_once( 'includes/class-template-loader.php' );
@@ -127,6 +122,11 @@ class Moltin_Init {
 		require_once( 'includes/class-moltin.php' );
 
 		/**
+		 * Load our logging class
+		 */
+		require_once('includes/class-logging.php');
+
+		/**
 		 * Load our helper classes
 		 */
 		require_once('helpers/moltin.php');
@@ -134,8 +134,9 @@ class Moltin_Init {
 		/**
 		 * Load our shortcodes
 		 */
-		require_once('includes/shortcodes/class-shortcode-base.php');
-		require_once('includes/shortcodes/class-shortcode-cart_total_items.php');
+		foreach (glob(plugin_dir_path(__FILE__) . 'includes/shortcodes/class-shortcode-*.php') as $filename) {
+			require_once $filename;
+		}
 
 		/**
 		 * Load the admin area
@@ -580,7 +581,7 @@ class Moltin_Init {
     }
 
     function moltin_dev_mode_footer() {
-    	global $moltin;
+    	$moltin = moltin();
 
     	if(get_option('moltin_dev')) {
 	    	echo '<p style="text-align:center;">Fresh API calls: ' . $moltin->moltin_api_new . '/' . ( $moltin->moltin_api_new + $moltin->moltin_api_cached ) . ' (' . $moltin->moltin_api_cached . ' cached)</p>';

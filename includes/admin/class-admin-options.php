@@ -25,7 +25,7 @@ class Moltin_Options {
         add settings page to menu
     ----------------------------------------------------*/
     function add_settings_page() {
-    	add_menu_page( __( 'Moltin', 'moltin' ), __( 'Moltin', 'moltin' ), 'manage_options', 'settings', array($this, 'theme_settings_page'), plugins_url('../../assets/backend/images/icon.png', __FILE__));
+    	add_menu_page( __( 'Moltin', 'moltin' ), __( 'Moltin', 'moltin' ), 'manage_options', 'settings', array($this, 'theme_settings_page'), plugins_url('../../assets/backend/images/icon.png', __FILE__), 200);
     }
     
     /*---------------------------------------------------

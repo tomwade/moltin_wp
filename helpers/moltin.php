@@ -27,6 +27,12 @@ if(!function_exists('moltin_call')) {
 
 }
 
+function moltin_log($title, $message, $parent = 0, $type = null) {
+	if(get_option('moltin_dev')) {
+		WP_Logging::add( $title, $message, $parent, $type );
+	}
+}
+
 
 /** Store functions ******************************************************/
 
