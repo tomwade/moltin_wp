@@ -38,4 +38,14 @@ jQuery(function($){
 			$('.back-top').fadeOut();
 		}
 	});
+
+	$('#ship_to_billing').bind('change', function(){        
+        var checked = this.checked;
+
+        if(checked) {
+        	$('.checkout-fields-shipping .form-group input, .checkout-fields-shipping .form-group select').attr('disabled', 'disabled').parent('.form-group').hide();
+        } else {
+        	$('.checkout-fields-shipping .form-group input, .checkout-fields-shipping .form-group select').attr('disabled', false).parent('.form-group').show();
+        }
+	});
 })
